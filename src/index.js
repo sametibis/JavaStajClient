@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './bootstrap.scss'
 import * as serviceWorker from './serviceWorker';
-import UserSignupPage from './UserSignupPage';
+import UserSignupPage from './components/UserSignupPage';
 
 ReactDOM.render(
   <React.StrictMode>
