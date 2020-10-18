@@ -4,10 +4,11 @@ import './index.css';
 import './bootstrap.scss'
 import * as serviceWorker from './serviceWorker';
 import UserSignupPage from './components/UserSignupPage';
+import LoginPage from './components/LoginPage';
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserSignupPage />
+    <LoginPage />
   </React.StrictMode>,
   document.getElementById('root')
 );
