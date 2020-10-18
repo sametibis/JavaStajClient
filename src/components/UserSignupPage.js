@@ -8,12 +8,16 @@ class UserSignupPage extends React.Component {
     password: null,
     passwordRepeat: null,
     apiCall: false,
+    errors: {},
   };
 
   onChange = (e) => {
     const { name, value } = e.target;
+    const errors = { ...this.state.errors };
+    errors[name] = undefined;
     this.setState({
       [name]: value,
+      errors,
     });
   };
 
@@ -32,7 +36,12 @@ class UserSignupPage extends React.Component {
     try {
       await signup(body);
     } catch (err) {
-      console.error(err);
+      if(err.response.data.validationError) {
+        this.setState({
+          errors: err.response.data.validationError,
+        });
+      }
+      
     }
 
     this.setState({
@@ -42,6 +51,7 @@ class UserSignupPage extends React.Component {
 
   render() {
     const { apiCall } = this.state;
+    const { userName } = this.state.errors;
 
     return (
       <div className='container'>
@@ -50,10 +60,11 @@ class UserSignupPage extends React.Component {
           <div className='form-group'>
             <label>User Name</label>
             <input
-              className='form-control'
+              className={userName ? 'form-control is-invalid' : 'form-control'}
               name='userName'
               onChange={this.onChange}
             />
+            <div className='invalid-feedback'>{userName}</div>
           </div>
           <div className='form-group'>
             <label>Display Name</label>
