@@ -4,42 +4,68 @@ import Input from './Input';
 
 export default class LoginPage extends Component {
   state = {
-    userName: null,
+    username: null,
     password: null,
+    error: null,
   };
 
   onChange = (e) => {
     const { name, value } = e.target;
     this.setState({
       [name]: value,
+      error: null,
     });
   };
 
-  onClick = (e) => {
+  onClick = async (e) => {
     e.preventDefault();
-    const { userName, password } = this.state;
+    const { username, password } = this.state;
     const creds = {
-      userName,
+      username,
       password,
     };
-    login(creds);
+    this.setState({
+      error: null,
+    });
+    try {
+      await login(creds);
+    } catch (err) {
+      this.setState({
+        error: err.response.data.message,
+      });
+    }
   };
 
   render() {
+    const { username, password, error } = this.state;
+
+    const buttonEnabled = username && password;
+
     return (
       <div>
         <div className='container'>
           <form>
             <h1 className='text-center'>Login</h1>
-            <Input label='User Name' name='userName' onChange={this.onChange} />
+            <Input label='User Name' name='username' onChange={this.onChange} />
+
             <Input
               label='Password'
               name='password'
               type='password'
               onChange={this.onChange}
             />
+            {error && (
+              <div className='alert alert-danger' role='alert'>
+                {error}
+              </div>
+            )}
+
             <div className='text-center'>
-              <button className='btn btn-primary' onClick={this.onClick}>
+              <button
+                className='btn btn-primary'
+                onClick={this.onClick}
+                disabled={!buttonEnabled}
+              >
                 Login
               </button>
             </div>

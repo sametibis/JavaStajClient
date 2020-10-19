@@ -4,7 +4,7 @@ import Input from './Input';
 
 class UserSignupPage extends React.Component {
   state = {
-    userName: null,
+    username: null,
     displayName: null,
     password: null,
     passwordRepeat: null,
@@ -33,10 +33,10 @@ class UserSignupPage extends React.Component {
 
   onClickSignup = async (e) => {
     e.preventDefault();
-    const { userName, displayName, password } = this.state;
+    const { username, displayName, password } = this.state;
 
     const body = {
-      userName: userName,
+      username: username,
       displayName: displayName,
       password: password,
     };
@@ -61,7 +61,7 @@ class UserSignupPage extends React.Component {
   render() {
     const { apiCall } = this.state;
     const {
-      userName,
+      username,
       displayName,
       password,
       passwordRepeat,
@@ -72,9 +72,9 @@ class UserSignupPage extends React.Component {
         <form>
           <h1 className='text-center'>Sign Up</h1>
           <Input
-            name='userName'
+            name='username'
             label='User Name'
-            error={userName}
+            error={username}
             onChange={this.onChange}
           />
           <Input
